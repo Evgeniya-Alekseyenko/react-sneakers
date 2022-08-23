@@ -18,8 +18,8 @@ function App() {
                     <li className='cart-box'>
                         <img
                             src='/img/Cart.svg'
-                            width={18}
-                            height={18}
+                            width={20}
+                            height={20}
                             alt='Cart'
                         />
                         <span>45$</span>
@@ -27,16 +27,16 @@ function App() {
                     <li>
                         <img
                             src='/img/Favorite-outline.svg'
-                            width={18}
-                            height={18}
+                            width={21}
+                            height={21}
                             alt='User'
                         />
                     </li>
                     <li>
                         <img
                             src='/img/User.svg'
-                            width={18}
-                            height={18}
+                            width={20}
+                            height={20}
                             alt='User'
                         />
                     </li>

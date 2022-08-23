@@ -31,6 +31,7 @@ header {
     justify-content: space-between;
     padding-bottom: 44px;
     border-bottom: 1px solid #eaeaea;
+    h3,
     p {
         margin: 0;
     }
@@ -62,9 +63,12 @@ header {
 .headerRight {
     display: flex;
     align-items: center;
-    margin: 55px 33px 0 0;
+    margin: 50px 33px 0 0;
     li:nth-child(2) {
-        margin: 0 30px;
+        margin: 0 30px 0 70px;
+    }
+    li:nth-child(3) {
+        margin-right: 30px;
     }
 }
 .cart-box {
