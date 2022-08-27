@@ -1,8 +1,11 @@
+import Card from './components/Card';
+import Header from './components/Header';
+
 function App() {
     return (
         <div className='wrapper'>
             <div
-                // style={{ display: 'none' }}
+                //  style={{ display: 'none' }}
                 className='overlay'
             >
                 <div className='drawer'>
@@ -77,6 +80,8 @@ function App() {
                 </div>
             </div>
 
+            <Header />
+            {/* 
             <header>
                 <div className='headerLeft'>
                     <img
@@ -117,7 +122,7 @@ function App() {
                         />
                     </li>
                 </ul>
-            </header>
+            </header> */}
             <div className='content'>
                 <div className='content-header'>
                     <h1>All sneakers</h1>
@@ -127,7 +132,7 @@ function App() {
                     </div>
                 </div>
                 <div className='content-card-box'>
-                    <div className='card-box'>
+                    {/* <div className='card-box'>
                         <div className='favorite'>
                             <img src='/img/Heart-unliked.svg' alt='Unliked' />
                         </div>
@@ -149,7 +154,9 @@ function App() {
                                 />
                             </button>
                         </div>
-                    </div>
+                    </div> */}
+
+                    <Card />
 
                     <div className='card-box'>
                         <img src='/img/sneakers/2.jpg' alt='green sneakers' />
@@ -218,5 +225,5 @@ function App() {
         </div>
     );
 }
-// #2 1:20
+// #2 1:48
 export default App;
