@@ -1,17 +1,15 @@
-export default function Card() {
+export default function Card(props) {
     return (
         <div className='card-box'>
             <div className='favorite'>
                 <img src='/img/Heart-unliked.svg' alt='Unliked' />
             </div>
-            <img src='/img/sneakers/1.jpg' alt='green sneakers' />
-            <p className='card-box__title'>
-                Nike Blazer Mid Suede Men's Sneakers
-            </p>
+            <img src={props.imageUrl} alt='Sneakers' />
+            <p className='card-box__title'>{props.title}</p>
             <div className='card-box__info'>
                 <div className='card-box__text'>
                     <span>Price:</span>
-                    <b>750 $</b>
+                    <b>{props.price} $</b>
                 </div>
                 <button className='card-box__btn'>
                     <img
