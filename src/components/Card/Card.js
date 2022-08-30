@@ -1,17 +1,19 @@
+import styles from './Card.module.scss';
+
 export default function Card(props) {
     return (
-        <div className='card-box'>
-            <div className='favorite'>
+        <div className={styles.card}>
+            <div className={styles.favorite}>
                 <img src='/img/Heart-unliked.svg' alt='Unliked' />
             </div>
             <img src={props.imageUrl} alt='Sneakers' />
-            <p className='card-box__title'>{props.title}</p>
-            <div className='card-box__info'>
-                <div className='card-box__text'>
+            <p className={styles.title}>{props.title}</p>
+            <div className={styles.info}>
+                <div className={styles.text}>
                     <span>Price:</span>
                     <b>{props.price} $</b>
                 </div>
-                <button className='card-box__btn'>
+                <button className={styles.btn} onClick={props.clickMe}>
                     <img
                         width={11}
                         height={11}

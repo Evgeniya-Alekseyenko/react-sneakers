@@ -1,4 +1,4 @@
-import Card from './components/Card';
+import Card from './components/Card/Card';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
 
@@ -44,49 +44,13 @@ function App() {
                             title={obj.title}
                             price={obj.price}
                             imageUrl={obj.imageUrl}
+                            clickMe={() => console.log(obj)}
                         />
                     ))}
-                    {/* <Card
-                        title="Nike Blazer Mid Suede Men's Sneakers"
-                        price={750}
-                        imageUrl='/img/sneakers/1.jpg'
-                    /> */}
-                    {/* <Card
-                        title="Nike Air Max 270 Men's Sneakers"
-                        price={750}
-                        imageUrl='/img/sneakers/2.jpg'
-                    />
-                    <Card
-                        title="Nike Blazer Mid Suede Men's Sneakers"
-                        price={750}
-                        imageUrl='/img/sneakers/3.jpg'
-                    /> */}
-
-                    {/* 
-                    <div className='card-box'>
-                        <img src='/img/sneakers/4.jpg' alt='green sneakers' />
-                        <p className='card-box__title'>
-                            Nike Blazer Mid Suede Men's Sneakers
-                        </p>
-                        <div className='card-box__info'>
-                            <div className='card-box__text'>
-                                <span>Price:</span>
-                                <b>750 $</b>
-                            </div>
-                            <button className='card-box__btn'>
-                                <img
-                                    width={11}
-                                    height={11}
-                                    src='/img/Plus.svg'
-                                    alt='plus'
-                                />
-                            </button>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </div>
     );
 }
-// #3 55:00
+// #3 1:52
 export default App;
