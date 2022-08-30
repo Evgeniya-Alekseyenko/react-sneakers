@@ -1,13 +1,14 @@
-export default function Drawer() {
+export default function Drawer(props) {
     return (
-        <div style={{ display: 'none' }} className='overlay'>
+        <div className='overlay'>
             <div className='drawer'>
                 <h2>
                     Cart
                     <img
+                        onClick={props.onClose}
                         className='cart-item-btn___remove'
                         src='/img/Btn-removed.svg'
-                        alt='Remove'
+                        alt='Close'
                     />
                 </h2>
                 <div className='cart-item-box'>

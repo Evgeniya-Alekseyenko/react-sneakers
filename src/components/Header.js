@@ -1,4 +1,4 @@
-export default function Header() {
+export default function Header(props) {
     return (
         <header>
             <div className='headerLeft'>
@@ -14,7 +14,7 @@ export default function Header() {
                 </div>
             </div>
             <ul className='headerRight'>
-                <li className='cart-box'>
+                <li className='cart-box' onClick={props.onClickCart}>
                     <img
                         src='/img/Cart.svg'
                         width={20}
