@@ -1,18 +1,18 @@
-export default function Drawer(props) {
+export default function Drawer({ onClose, items = [] }) {
     return (
         <div className='overlay'>
             <div className='drawer'>
                 <h2>
                     Cart
                     <img
-                        onClick={props.onClose}
+                        onClick={onClose}
                         className='cart-item-btn___remove'
                         src='/img/Btn-removed.svg'
                         alt='Close'
                     />
                 </h2>
                 <div className='cart-item-box'>
-                    <div className='cart-item'>
+                    {/* <div className='cart-item'>
                         <div>
                             <img
                                 width={70}
@@ -51,7 +51,27 @@ export default function Drawer(props) {
                             src='/img/Btn-removed.svg'
                             alt='Remove'
                         />
-                    </div>
+                    </div> */}
+
+                    {items.map((obj) => (
+                        <div className='cart-item'>
+                            <img
+                                width={70}
+                                height={70}
+                                src={obj.imageUrl}
+                                alt='Sneakers'
+                            />
+                            <div className='cart-item__text'>
+                                <p className='card-box__title'>{obj.title} </p>
+                                <b>{obj.price}</b>
+                            </div>
+                            <img
+                                className='cart-item-btn___remove'
+                                src='/img/Btn-removed.svg'
+                                alt='Remove'
+                            />
+                        </div>
+                    ))}
                 </div>
                 <div className='cart-item-bottom'>
                     <ul>

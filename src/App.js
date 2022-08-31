@@ -6,6 +6,9 @@ import Drawer from './components/Drawer';
 
 function App() {
     const [items, setItems] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
+    const [searchValue, setsearchValue] = useState('');
+
     const [cartOpened, setCartOpened] = useState(false);
 
     useEffect(() => {
@@ -18,9 +21,19 @@ function App() {
             });
     }, []);
 
+    const onAddtoCart = (obj) => {
+        setCartItems((prev) => [...prev, obj]);
+    };
+    console.log(cartItems);
+
     return (
         <div className='wrapper'>
-            {cartOpened && <Drawer onClose={() => setCartOpened(false)} />}
+            {cartOpened && (
+                <Drawer
+                    items={cartItems}
+                    onClose={() => setCartOpened(false)}
+                />
+            )}
             {/* {cartOpened ? ( <Drawer onClose={() => setCartOpened(false)} />) : null} */}
             <Header onClickCart={() => setCartOpened(true)} />
             <div className='content'>
@@ -32,13 +45,14 @@ function App() {
                     </div>
                 </div>
                 <div className='content-card-box'>
-                    {items.map((obj) => (
+                    {items.map((item, title) => (
                         <Card
-                            title={obj.title}
-                            price={obj.price}
-                            imageUrl={obj.imageUrl}
-                            // onClickPlus={() => console.log('Click')}
-                            // onClickFavorite={() => console.log('Heart')}
+                            key={item.title}
+                            title={item.title}
+                            price={item.price}
+                            imageUrl={item.imageUrl}
+                            onPlus={(obj) => onAddtoCart(obj)}
+                            // onClickFavorite={() => console.log('item is', item)}
                         />
                     ))}
                 </div>
