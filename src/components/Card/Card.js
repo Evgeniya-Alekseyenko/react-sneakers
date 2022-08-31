@@ -37,7 +37,6 @@ export default function Card(props) {
                     src={isAdded ? '/img/Btn-checked.svg' : '/img/Btn-plus.svg'}
                     alt='plus'
                 />
-                {/* </button> */}
             </div>
         </div>
     );
