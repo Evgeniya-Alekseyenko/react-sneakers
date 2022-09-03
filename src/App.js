@@ -8,7 +8,6 @@ function App() {
     const [items, setItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const [searchValue, setsearchValue] = useState('');
-
     const [cartOpened, setCartOpened] = useState(false);
 
     useEffect(() => {
@@ -24,7 +23,11 @@ function App() {
     const onAddtoCart = (obj) => {
         setCartItems((prev) => [...prev, obj]);
     };
-    console.log(cartItems);
+    // console.log(cartItems);
+
+    const onChangeSearchInput = (event) => {
+        setsearchValue(event.target.value);
+    };
 
     return (
         <div className='wrapper'>
@@ -38,27 +41,49 @@ function App() {
             <Header onClickCart={() => setCartOpened(true)} />
             <div className='content'>
                 <div className='content-header'>
-                    <h1>All sneakers</h1>
+                    <h1>
+                        {searchValue
+                            ? `Search by: "${searchValue}" `
+                            : `All sneakers`}
+                    </h1>
                     <div className='search-block'>
                         <img src='/img/Search.svg' alt='Search icon' />
-                        <input placeholder='Search...' />
+                        {searchValue && (
+                            <img
+                                onClick={() => setsearchValue('')}
+                                className='clear'
+                                src='/img/Btn-removed.svg'
+                                alt='Clear'
+                            />
+                        )}
+                        <input
+                            onChange={onChangeSearchInput}
+                            value={searchValue}
+                            placeholder='Search...'
+                        />
                     </div>
                 </div>
                 <div className='content-card-box'>
-                    {items.map((item, title) => (
-                        <Card
-                            key={item.title}
-                            title={item.title}
-                            price={item.price}
-                            imageUrl={item.imageUrl}
-                            onPlus={(obj) => onAddtoCart(obj)}
-                            // onClickFavorite={() => console.log('item is', item)}
-                        />
-                    ))}
+                    {items
+                        .filter((item) =>
+                            item.title
+                                .toLowerCase()
+                                .includes(searchValue.toLocaleLowerCase())
+                        )
+                        .map((item, title) => (
+                            <Card
+                                key={item.title}
+                                title={item.title}
+                                price={item.price}
+                                imageUrl={item.imageUrl}
+                                onPlus={(obj) => onAddtoCart(obj)}
+                                // onClickFavorite={() => console.log('item is', item)}
+                            />
+                        ))}
                 </div>
             </div>
         </div>
     );
 }
-// #4 1:52
+// #5 44:00
 export default App;
