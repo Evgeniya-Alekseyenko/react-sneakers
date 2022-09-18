@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import styles from './Card.module.scss';
 
-export default function Card({
-    imageUrl,
-    title,
-    price,
-    onClickFavorite,
-    onPlus,
-}) {
+export default function Card({ imageUrl, title, price, onPlus }) {
     const [isAdded, setIsAdded] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
 
     const onClickPlus = () => {
         setIsAdded(!isAdded);
         onPlus({ imageUrl, title, price });
+    };
+
+    const onClickFavorite = () => {
+        setIsFavorite(!isFavorite);
     };
 
     // useEffect(() => {
@@ -23,7 +22,11 @@ export default function Card({
         <div className={styles.card}>
             <div className={styles.favorite}>
                 <img
-                    src='/img/Heart-unliked.svg'
+                    src={
+                        isFavorite
+                            ? '/img/Heart-liked.svg'
+                            : '/img/Heart-unliked.svg'
+                    }
                     alt='Unliked'
                     onClick={onClickFavorite}
                 />
