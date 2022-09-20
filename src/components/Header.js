@@ -1,17 +1,21 @@
+import { Link } from 'react-router-dom';
+
 export default function Header(props) {
     return (
         <header>
             <div className='headerLeft'>
-                <img
-                    src='/img/logo.png'
-                    width={40}
-                    height={40}
-                    alt='logo sneakers'
-                />
-                <div className='headerInfo'>
-                    <h3>React Sneakers</h3>
-                    <p>Shop the best sneakers</p>
-                </div>
+                <Link to='/'>
+                    <img
+                        src='/img/logo.png'
+                        width={40}
+                        height={40}
+                        alt='logo sneakers'
+                    />
+                    <div className='headerInfo'>
+                        <h3>React Sneakers</h3>
+                        <p>Shop the best sneakers</p>
+                    </div>
+                </Link>
             </div>
             <ul className='headerRight'>
                 <li className='cart-box' onClick={props.onClickCart}>
@@ -24,12 +28,14 @@ export default function Header(props) {
                     <span>45 $</span>
                 </li>
                 <li>
-                    <img
-                        src='/img/Favorite-outline.svg'
-                        width={21}
-                        height={21}
-                        alt='User'
-                    />
+                    <Link to='/favorites'>
+                        <img
+                            src='/img/Favorite-outline.svg'
+                            width={21}
+                            height={21}
+                            alt='Bookmarks'
+                        />
+                    </Link>
                 </li>
                 <li>
                     <img

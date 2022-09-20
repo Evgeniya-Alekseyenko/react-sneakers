@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Routes, Route } from 'react-router-dom';
 
-import Card from './components/Card/Card';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
+import Home from './pages/Home';
+import Card from './components/Card/Card';
 
 function App() {
     const [items, setItems] = useState([]);
@@ -30,6 +32,11 @@ function App() {
             .then((res) => {
                 setCartItems(res.data);
             });
+        // axios
+        //     .get('https://630e37de3792563418798019.mockapi.io/favorites')
+        //     .then((res) => {
+        //         setFavorites(res.data);
+        //     });
     }, []);
 
     const onAddtoCart = (obj) => {
@@ -67,7 +74,26 @@ function App() {
             )}
             {/* {cartOpened ? ( <Drawer onClose={() => setCartOpened(false)} />) : null} */}
             <Header onClickCart={() => setCartOpened(true)} />
-            <div className='content'>
+            {/* <Home /> */}
+            <Routes>
+                <Route
+                    // exact
+                    path='/'
+                    element={
+                        <Home
+                            items={items}
+                            searchValue={searchValue}
+                            setsearchValue={setsearchValue}
+                            onAddtoCart={onAddtoCart}
+                            onAddToFavorite={onAddToFavorite}
+                            onChangeSearchInput={onChangeSearchInput}
+                        />
+                        // <Card />
+                    }
+                ></Route>
+                <Route path='/favorites' exact element={123123}></Route>
+            </Routes>
+            {/* <div className='content'>
                 <div className='content-header'>
                     <h1>
                         {searchValue
@@ -109,9 +135,9 @@ function App() {
                             />
                         ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
-// #5 56:00
+// #5 01:40
 export default App;
