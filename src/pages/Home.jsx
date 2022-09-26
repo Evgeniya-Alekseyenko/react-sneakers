@@ -40,14 +40,15 @@ export default function Home({
                             .toLowerCase()
                             .includes(searchValue.toLocaleLowerCase())
                     )
-                    .map((item, title) => (
+                    .map((item, index) => (
                         <Card
-                            key={item.title}
-                            title={item.title}
-                            price={item.price}
-                            imageUrl={item.imageUrl}
+                            key={index}
+                            // title={item.title}
+                            // price={item.price}
+                            // imageUrl={item.imageUrl}
                             onFavorite={(obj) => onAddToFavorite(obj)}
                             onPlus={(obj) => onAddtoCart(obj)}
+                            {...item}
                         />
                     ))}
             </div>

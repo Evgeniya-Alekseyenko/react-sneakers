@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
 import Home from './pages/Home';
-import Card from './components/Card/Card';
+import Favorites from './pages/Favorites';
 
 function App() {
     const [items, setItems] = useState([]);
@@ -15,13 +15,6 @@ function App() {
     const [cartOpened, setCartOpened] = useState(false);
 
     useEffect(() => {
-        // fetch('https://630e37de3792563418798019.mockapi.io/items')
-        //     .then((res) => {
-        //         return res.json();
-        //     })
-        //     .then((json) => {
-        //         setItems(json);
-        //     });
         axios
             .get('https://630e37de3792563418798019.mockapi.io/items')
             .then((res) => {
@@ -32,11 +25,11 @@ function App() {
             .then((res) => {
                 setCartItems(res.data);
             });
-        // axios
-        //     .get('https://630e37de3792563418798019.mockapi.io/favorites')
-        //     .then((res) => {
-        //         setFavorites(res.data);
-        //     });
+        axios
+            .get('https://630e37de3792563418798019.mockapi.io/favorites')
+            .then((res) => {
+                setFavorites(res.data);
+            });
     }, []);
 
     const onAddtoCart = (obj) => {
@@ -51,14 +44,23 @@ function App() {
         setCartItems((prev) => prev.filter((item) => item.id !== id));
     };
 
-    const onAddToFavorite = (obj) => {
-        axios.post(
-            'https://630e37de3792563418798019.mockapi.io/favorites',
-            obj
-        );
-        setFavorites((prev) => [...prev, obj]);
+    const onAddToFavorite = async (obj) => {
+        try {
+            if (favorites.find((favObj) => favObj.id === obj.id)) {
+                axios.delete(
+                    `https://630e37de3792563418798019.mockapi.io/favorites/${obj.id}`
+                );
+            } else {
+                const { data } = await axios.post(
+                    'https://630e37de3792563418798019.mockapi.io/favorites',
+                    obj
+                );
+                setFavorites((prev) => [...prev, data]);
+            }
+        } catch (error) {
+            alert('Failed to add to favorites');
+        }
     };
-
     const onChangeSearchInput = (event) => {
         setsearchValue(event.target.value);
     };
@@ -74,10 +76,9 @@ function App() {
             )}
             {/* {cartOpened ? ( <Drawer onClose={() => setCartOpened(false)} />) : null} */}
             <Header onClickCart={() => setCartOpened(true)} />
-            {/* <Home /> */}
             <Routes>
                 <Route
-                    // exact
+                    exact
                     path='/'
                     element={
                         <Home
@@ -88,56 +89,23 @@ function App() {
                             onAddToFavorite={onAddToFavorite}
                             onChangeSearchInput={onChangeSearchInput}
                         />
-                        // <Card />
                     }
                 ></Route>
-                <Route path='/favorites' exact element={123123}></Route>
             </Routes>
-            {/* <div className='content'>
-                <div className='content-header'>
-                    <h1>
-                        {searchValue
-                            ? `Search by: "${searchValue}" `
-                            : `All sneakers`}
-                    </h1>
-                    <div className='search-block'>
-                        <img src='/img/Search.svg' alt='Search icon' />
-                        {searchValue && (
-                            <img
-                                onClick={() => setsearchValue('')}
-                                className='clear'
-                                src='/img/Btn-removed.svg'
-                                alt='Clear'
-                            />
-                        )}
-                        <input
-                            onChange={onChangeSearchInput}
-                            value={searchValue}
-                            placeholder='Search...'
+            <Routes>
+                <Route
+                    exact
+                    path='/favorites'
+                    element={
+                        <Favorites
+                            items={favorites}
+                            onAddToFavorite={onAddToFavorite}
                         />
-                    </div>
-                </div>
-                <div className='content-card-box'>
-                    {items
-                        .filter((item) =>
-                            item.title
-                                .toLowerCase()
-                                .includes(searchValue.toLocaleLowerCase())
-                        )
-                        .map((item, title) => (
-                            <Card
-                                key={item.title}
-                                title={item.title}
-                                price={item.price}
-                                imageUrl={item.imageUrl}
-                                onFavorite={(obj) => onAddToFavorite(obj)}
-                                onPlus={(obj) => onAddtoCart(obj)}
-                            />
-                        ))}
-                </div>
-            </div> */}
+                    }
+                ></Route>
+            </Routes>
         </div>
     );
 }
-// #5 01:40
+// #5 02:25
 export default App;
