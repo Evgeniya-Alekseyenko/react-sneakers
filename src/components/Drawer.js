@@ -15,7 +15,7 @@ export default function Drawer({ onClose, onRemove, items = [] }) {
                 {items.length > 0 ? (
                     <div className='cart-item-box'>
                         {items.map((obj) => (
-                            <div className='cart-item'>
+                            <div key={obj.id} className='cart-item'>
                                 <img
                                     width={70}
                                     height={70}
@@ -56,19 +56,19 @@ export default function Drawer({ onClose, onRemove, items = [] }) {
                         </div>
                     </div>
                 ) : (
-                    <div class='cartEmpty'>
+                    <div className='cartEmpty'>
                         <img
-                            class='mb-20'
+                            className='mb-20'
                             width='120px'
                             height='120px'
                             src='/img/EmptyCart.svg'
                             alt='Empty cart'
                         />
                         <h2>Cart is empty</h2>
-                        <p class='opacity-6'>
+                        <p className='opacity-6'>
                             Add at least one pair of sneakers to place an order.
                         </p>
-                        <button onClick={onClose} class='greenButton'>
+                        <button onClick={onClose} className='greenButton'>
                             <img src='/img/Arrow.svg' alt='Arrow' />
                             Come back
                         </button>

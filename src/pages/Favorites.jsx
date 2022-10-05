@@ -11,13 +11,10 @@ export default function Favorites({ items, onAddToFavorite }) {
                 <div className='content-card-box'>
                     {items.map((item, index) => (
                         <Card
-                            // title={item.title}
-                            // price={item.price}
-                            // imageUrl={item.imageUrl}
                             key={index}
                             favorited={true}
                             onFavorite={onAddToFavorite}
-                            {...item} //передаем все свойства,что хранятся в айтеме, чтоб не прописывать их отдельно
+                            {...item} //передаем все свойства,что хранятся в карточке товара, чтоб не прописывать их отдельно
                         />
                     ))}
                 </div>

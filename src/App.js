@@ -11,31 +11,64 @@ function App() {
     const [items, setItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const [favorites, setFavorites] = useState([]);
-    const [searchValue, setsearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState('');
     const [cartOpened, setCartOpened] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios
-            .get('https://630e37de3792563418798019.mockapi.io/items')
-            .then((res) => {
-                setItems(res.data);
-            });
-        axios
-            .get('https://630e37de3792563418798019.mockapi.io/cart')
-            .then((res) => {
-                setCartItems(res.data);
-            });
-        axios
-            .get('https://630e37de3792563418798019.mockapi.io/favorites')
-            .then((res) => {
-                setFavorites(res.data);
-            });
+        // axios
+        //     .get('https://630e37de3792563418798019.mockapi.io/items')
+        //     .then((res) => {
+        //         setItems(res.data);
+        //     });
+        // axios
+        //     .get('https://630e37de3792563418798019.mockapi.io/cart')
+        //     .then((res) => {
+        //         setCartItems(res.data);
+        //     });
+        // axios
+        //     .get('https://630e37de3792563418798019.mockapi.io/favorites')
+        //     .then((res) => {
+        //         setFavorites(res.data);
+        //     });
+        async function fetchData() {
+            // TODO: Сделать try catch + Promise.all
+            // setIsLoading(true);// если ф-я вып-ся больше, чем 1 раз, то ставить еще и тру
+            const cartResponse = await axios.get(
+                'https://630e37de3792563418798019.mockapi.io/cart'
+            );
+            const favoritesResponse = await axios.get(
+                'https://630e37de3792563418798019.mockapi.io/favorites'
+            );
+            const itemsResponse = await axios.get(
+                'https://630e37de3792563418798019.mockapi.io/items'
+            );
+
+            setIsLoading(false);
+            setCartItems(cartResponse.data);
+            setFavorites(favoritesResponse.data);
+            setItems(itemsResponse.data);
+        }
+
+        fetchData();
     }, []);
 
     const onAddtoCart = (obj) => {
         // console.log('obj is', obj);
-        axios.post('https://630e37de3792563418798019.mockapi.io/cart', obj);
-        setCartItems((prev) => [...prev, obj]);
+        // axios.post('https://630e37de3792563418798019.mockapi.io/cart', obj);
+        // setCartItems((prev) => [...prev, obj]);
+        console.log(obj);
+        if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
+            axios.delete(
+                `https://630e37de3792563418798019.mockapi.io/cart/${obj.id}`
+            );
+            setCartItems((prev) =>
+                prev.filter((item) => Number(item.id) !== Number(obj.id))
+            );
+        } else {
+            axios.post('https://630e37de3792563418798019.mockapi.io/cart', obj);
+            setCartItems((prev) => [...prev, obj]);
+        }
     };
     // console.log(cartItems);
 
@@ -62,8 +95,12 @@ function App() {
         }
     };
     const onChangeSearchInput = (event) => {
-        setsearchValue(event.target.value);
+        setSearchValue(event.target.value);
     };
+
+    // const isItemAdded = (id) => {
+    //     return cartItems.some((obj) => Number(obj.id) === Number(id));
+    //   };
 
     return (
         <div className='wrapper'>
@@ -83,11 +120,13 @@ function App() {
                     element={
                         <Home
                             items={items}
+                            cartItems={cartItems}
                             searchValue={searchValue}
-                            setsearchValue={setsearchValue}
-                            onAddtoCart={onAddtoCart}
-                            onAddToFavorite={onAddToFavorite}
+                            setSearchValue={setSearchValue}
                             onChangeSearchInput={onChangeSearchInput}
+                            onAddToFavorite={onAddToFavorite}
+                            onAddtoCart={onAddtoCart}
+                            isLoading={isLoading}
                         />
                     }
                 ></Route>
@@ -107,5 +146,5 @@ function App() {
         </div>
     );
 }
-// #5 02:25
+// #6 02:00
 export default App;
