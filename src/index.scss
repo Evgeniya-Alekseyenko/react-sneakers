@@ -182,6 +182,11 @@ header {
         margin: 0 20px;
     }
 }
+.drawer-cart {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
 .cart-item-btn___remove {
     opacity: 0.5;
     transition: opacity 0.15s ease-in-out;
