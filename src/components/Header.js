@@ -9,7 +9,7 @@ export default function Header(props) {
                         src='/img/logo.png'
                         width={40}
                         height={40}
-                        alt='logo sneakers'
+                        alt='Logo sneakers'
                     />
                     <div className='headerInfo'>
                         <h3>React Sneakers</h3>

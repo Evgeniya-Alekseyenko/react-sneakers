@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import styles from './Card.module.scss';
 import ContentLoader from 'react-content-loader';
+
+import styles from './Card.module.scss';
 import AppContext from '../../context';
 
 export default function Card({
@@ -27,10 +28,6 @@ export default function Card({
         onFavorite({ id, title, imageUrl, price });
         setIsFavorite(!isFavorite);
     };
-
-    // useEffect(() => {
-    //     console.log('Changed');
-    // }, [isAdded]);
 
     return (
         <div className={styles.card}>

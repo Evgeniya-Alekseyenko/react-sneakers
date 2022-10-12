@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
+
 import AppContext from '../context';
 
 export default function Info({ title, image, description }) {
     const { setCartOpened } = useContext(AppContext);
 
     return (
-        <div className='cartEmpty d-flex align-center justify-center flex-column flex'>
+        <div className='cartEmpty'>
             <img className='mb-20' width='120px' src={image} alt='Empty' />
             <h2>{title}</h2>
             <p className='opacity-6'>{description}</p>
@@ -14,7 +15,7 @@ export default function Info({ title, image, description }) {
                 className='greenButton'
             >
                 <img src='/img/Arrow.svg' alt='Arrow' />
-                Вернуться назад
+                Return
             </button>
         </div>
     );

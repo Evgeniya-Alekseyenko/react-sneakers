@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Card from '../components/Card/Card';
 
 export default function Home({
@@ -56,9 +57,6 @@ export default function Home({
                         ? `Search by: "${searchValue}" `
                         : `All sneakers`}
                 </h1>
-
-
-
 
                 <div className='search-block'>
                     <img src='/img/Search.svg' alt='Search icon' />

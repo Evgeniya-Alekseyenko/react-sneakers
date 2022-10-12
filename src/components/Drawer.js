@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
 import AppContext from '../context';
@@ -7,28 +7,34 @@ import Info from './info';
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Drawer({ onClose, onRemove, items = [] }) {
-    const { cartItems, setCartItems } = React.useContext(AppContext);
-    const [orderId, setOrderId] = React.useState(null);
-    const [isOrderComplete, setIsOrderComplete] = React.useState(false);
-    const [isLoading, setIsLoading] = React.useState(false);
+    const { cartItems, setCartItems } = useContext(AppContext);
+    const [orderId, setOrderId] = useState(null);
+    const [isOrderComplete, setIsOrderComplete] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const onClickOrder = async () => {
         try {
             setIsLoading(true);
-            const { data } = await axios.post('/orders', {
-                items: cartItems,
-            });
+            const { data } = await axios.post(
+                'https://630e37de3792563418798019.mockapi.io/orders',
+                {
+                    items: cartItems,
+                }
+            );
             setOrderId(data.id);
             setIsOrderComplete(true);
             setCartItems([]);
 
             for (let i = 0; i < cartItems.length; i++) {
                 const item = cartItems[i];
-                await axios.delete('/cart/' + item.id);
+                await axios.delete(
+                    'https://630e37de3792563418798019.mockapi.io/cart/' +
+                        item.id
+                );
                 await delay(1000);
             }
         } catch (error) {
-            alert('Ошибка при создании заказа :(');
+            alert('Error creating order');
         }
         setIsLoading(false);
     };
@@ -44,7 +50,6 @@ export default function Drawer({ onClose, onRemove, items = [] }) {
                         alt='Close'
                     />
                 </h2>
-
                 {items.length > 0 ? (
                     <div className='drawer-cart'>
                         <div className='cart-item-box'>
@@ -62,20 +67,12 @@ export default function Drawer({ onClose, onRemove, items = [] }) {
                                         </p>
                                         <b>{obj.price}</b>
                                     </div>
-                                    {/* <img
+                                    <img
                                         onClick={() => onRemove(obj.id)}
                                         className='cart-item-btn___remove'
                                         src='/img/Btn-removed.svg'
                                         alt='Remove'
-                                    /> */}
-                                    <button
-                                        disabled={isLoading}
-                                        onClick={onClickOrder}
-                                        className='greenButton'
-                                    >
-                                        Оформить заказ{' '}
-                                        <img src='img/Arrow.svg' alt='Arrow' />{' '}
-                                    </button>
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -92,9 +89,13 @@ export default function Drawer({ onClose, onRemove, items = [] }) {
                                     <b>0 %</b>
                                 </li>
                             </ul>
-                            <button className='cart-item-btn greenButton'>
+                            <button
+                                disabled={isLoading}
+                                onClick={onClickOrder}
+                                className='cart-item-btn greenButton'
+                            >
                                 Checkout
-                                <img src='/img/Arrow.svg' alt='Arrow' />
+                                <img src='img/Arrow.svg' alt='Arrow' />{' '}
                             </button>
                         </div>
                     </div>
@@ -116,21 +117,20 @@ export default function Drawer({ onClose, onRemove, items = [] }) {
                     //         Come back
                     //     </button>
                     // </div>
-
                     <Info
                         title={
                             isOrderComplete
-                                ? 'Заказ оформлен!'
-                                : 'Корзина пустая'
+                                ? 'Order is processed!'
+                                : 'Cart is empty'
                         }
                         description={
                             isOrderComplete
-                                ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке`
-                                : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'
+                                ? `Your order #${orderId} will soon be handed over to courier delivery`
+                                : 'Add at least one pair of sneakers to place an order.'
                         }
                         image={
                             isOrderComplete
-                                ? '/img/complete-order.jpg'
+                                ? '/img/Complete-order.jpg'
                                 : '/img/EmptyCart.svg'
                         }
                     />
