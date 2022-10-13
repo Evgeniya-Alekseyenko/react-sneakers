@@ -1,16 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
-import AppContext from '../context';
+// import AppContext from '../context';
 import Info from './info';
+import { useCart } from '../hooks/useCart';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Drawer({ onClose, onRemove, items = [] }) {
-    const { cartItems, setCartItems } = useContext(AppContext);
+    // const { cartItems, setCartItems } = useContext(AppContext);
+    const { cartItems, setCartItems, totalPrice } = useCart();
     const [orderId, setOrderId] = useState(null);
     const [isOrderComplete, setIsOrderComplete] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    // const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
 
     const onClickOrder = async () => {
         try {
@@ -79,14 +83,23 @@ export default function Drawer({ onClose, onRemove, items = [] }) {
                         <div className='cart-item-bottom'>
                             <ul>
                                 <li>
-                                    <span>Total:</span>
+                                    <span>Price:</span>
                                     <div></div>
-                                    <b>1500 $</b>
+                                    <b>{totalPrice} $</b>
                                 </li>
                                 <li className='cart-item-bottom__info'>
-                                    <span>Discount:</span>
+                                    <span>Discount 5%:</span>
                                     <div></div>
-                                    <b>0 %</b>
+                                    <b>{Math.round(totalPrice * 0.05)} $</b>
+                                </li>
+                                <li className='cart-item-bottom__info'>
+                                    <span>Total:</span>
+                                    <div></div>
+                                    <b>
+                                        {totalPrice -
+                                            Math.round(totalPrice * 0.05)}{' '}
+                                        $
+                                    </b>
                                 </li>
                             </ul>
                             <button

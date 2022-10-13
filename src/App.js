@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Drawer from './components/Drawer';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
+import Orders from './pages/Orders';
 
 function App() {
     const [items, setItems] = useState([]);
@@ -202,9 +203,12 @@ function App() {
                         }
                     ></Route>
                 </Routes>
+                <Routes>
+                    <Route exact path='/orders' element={<Orders />}></Route>
+                </Routes>
             </div>
         </AppContext.Provider>
     );
 }
-// #7
+// #7 0:24
 export default App;

@@ -1,6 +1,15 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { useCart } from '../hooks/useCart';
+// import AppContext from '../context';
+
 export default function Header(props) {
+    // const { cartItems } = useContext(AppContext);
+    // const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
+
+    const { totalPrice } = useCart();
+
     return (
         <header>
             <div className='headerLeft'>
@@ -25,7 +34,7 @@ export default function Header(props) {
                         height={20}
                         alt='Cart'
                     />
-                    <span>45 $</span>
+                    <span>{totalPrice} $</span>
                 </li>
                 <li>
                     <Link to='/favorites'>
@@ -37,14 +46,22 @@ export default function Header(props) {
                         />
                     </Link>
                 </li>
-                <li>
+                {/* <li>
                     <img
                         src='/img/User.svg'
                         width={20}
                         height={20}
                         alt='User'
                     />
-                </li>
+                </li> */}
+                <Link to='/orders'>
+                    <img
+                        width={18}
+                        height={18}
+                        src='/img/User.svg'
+                        alt='User'
+                    />
+                </Link>
             </ul>
         </header>
     );
