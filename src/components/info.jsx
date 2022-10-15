@@ -7,9 +7,9 @@ export default function Info({ title, image, description }) {
 
     return (
         <div className='cartEmpty'>
-            <img className='mb-20' width='120px' src={image} alt='Empty' />
+            <img width='120px' src={image} alt='Empty' />
             <h2>{title}</h2>
-            <p className='opacity-6'>{description}</p>
+            <p>{description}</p>
             <button
                 onClick={() => setCartOpened(false)}
                 className='greenButton'

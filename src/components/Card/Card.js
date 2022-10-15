@@ -18,14 +18,17 @@ export default function Card({
     const { isItemAdded } = useContext(AppContext);
     // const [isAdded, setIsAdded] = useState(added);
     const [isFavorite, setIsFavorite] = useState(favorited);
+    const obj = { id, parentId: id, title, imageUrl, price };
 
     const onClickPlus = () => {
-        onPlus({ id, imageUrl, title, price });
+        // onPlus({ id, imageUrl, title, price });
+        onPlus(obj);
         // setIsAdded(!isAdded);
     };
 
     const onClickFavorite = () => {
-        onFavorite({ id, title, imageUrl, price });
+        // onFavorite({ id, title, imageUrl, price });
+        onFavorite(obj);
         setIsFavorite(!isFavorite);
     };
 
@@ -62,7 +65,7 @@ export default function Card({
                 </ContentLoader>
             ) : (
                 <>
-                    <div className={styles.favorite} onClick={onClickFavorite}>
+                    {/* <div className={styles.favorite} onClick={onClickFavorite}>
                         <img
                             src={
                                 isFavorite
@@ -71,7 +74,22 @@ export default function Card({
                             }
                             alt='Unliked'
                         />
-                    </div>
+                    </div> */}
+                    {onFavorite && (
+                        <div
+                            className={styles.favorite}
+                            onClick={onClickFavorite}
+                        >
+                            <img
+                                src={
+                                    isFavorite
+                                        ? '/img/Heart-liked.svg'
+                                        : '/img/Heart-unliked.svg'
+                                }
+                                alt='Unliked'
+                            />
+                        </div>
+                    )}
                     <img
                         className={styles.cardImg}
                         src={imageUrl}
@@ -83,16 +101,29 @@ export default function Card({
                             <span>Price:</span>
                             <b>{price} $</b>
                         </div>
-                        <img
-                            onClick={onClickPlus}
-                            src={
-                                // isAdded
-                                isItemAdded(id)
-                                    ? '/img/Btn-checked.svg'
-                                    : '/img/Btn-plus.svg'
-                            }
-                            alt='plus'
-                        />
+                        {onPlus && (
+                            // <img
+                            //     onClick={onClickPlus}
+                            //     src={
+                            //         // isAdded
+                            //         isItemAdded(id)
+                            //             ? '/img/Btn-checked.svg'
+                            //             : '/img/Btn-plus.svg'
+                            //     }
+                            //     alt='plus'
+                            // />
+
+                            <img
+                                className={styles.plus}
+                                onClick={onClickPlus}
+                                src={
+                                    isItemAdded(id)
+                                        ? '/img/Btn-checked.svg'
+                                        : '/img/Btn-plus.svg'
+                                }
+                                alt='Plus'
+                            />
+                        )}
                     </div>
                 </>
             )}

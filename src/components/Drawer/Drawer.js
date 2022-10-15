@@ -1,50 +1,59 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
+// import axios from 'axios';
 
-// import AppContext from '../context';
-import Info from './info';
-import { useCart } from '../hooks/useCart';
+import Info from '../info';
+import { useCart } from '../../hooks/useCart';
+import AppContext from '../../context';
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+import styles from './Drawer.module.scss';
 
-export default function Drawer({ onClose, onRemove, items = [] }) {
-    // const { cartItems, setCartItems } = useContext(AppContext);
-    const { cartItems, setCartItems, totalPrice } = useCart();
-    const [orderId, setOrderId] = useState(null);
-    const [isOrderComplete, setIsOrderComplete] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    // const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
+export default function Drawer({ onClose, onRemove, items = [], opened }) {
+    // const { cartItems, setCartItems, totalPrice } = useCart();
+    const { totalPrice } = useCart();
 
-    const onClickOrder = async () => {
-        try {
-            setIsLoading(true);
-            const { data } = await axios.post(
-                'https://630e37de3792563418798019.mockapi.io/orders',
-                {
-                    items: cartItems,
-                }
-            );
-            setOrderId(data.id);
-            setIsOrderComplete(true);
-            setCartItems([]);
+    // const [orderId, setOrderId] = useState(null);
+    // const [isOrderComplete, setIsOrderComplete] = useState(false);
+    const [isLoading] = useState(false);
 
-            for (let i = 0; i < cartItems.length; i++) {
-                const item = cartItems[i];
-                await axios.delete(
-                    'https://630e37de3792563418798019.mockapi.io/cart/' +
-                        item.id
-                );
-                await delay(1000);
-            }
-        } catch (error) {
-            alert('Error creating order');
-        }
-        setIsLoading(false);
-    };
+    const { orderId, onClickOrder, isOrderComplete } = useContext(AppContext);
+
+    // const onClickOrder = async () => {
+    //     try {
+    //         setIsLoading(true);
+    //         const { data } = await axios.post(
+    //             'https://630e37de3792563418798019.mockapi.io/orders',
+    //             {
+    //                 items: cartItems,
+    //             }
+    //         );
+    //         setOrderId(data.id);
+    //         setIsOrderComplete(true);
+    //         setCartItems([]);
+
+    //         for (let i = 0; i < cartItems.length; i++) {
+    //             const item = cartItems[i];
+    //             await axios.delete(
+    //                 'https://630e37de3792563418798019.mockapi.io/cart/' +
+    //                     item.id
+    //             );
+    //             await delay(1000);
+    //         }
+    //     } catch (error) {
+    //         alert('Error creating order');
+    //     }
+    //     setIsLoading(false);
+    // };
     return (
-        <div className='overlay'>
-            <div className='drawer'>
+        // <div className='overlay'>
+        //     <div className='drawer'>
+        <div
+            className={`${styles.overlay} ${
+                opened ? styles.overlayVisible : ''
+            }`}
+        >
+            <div className={styles.drawer}>
                 <h2>
                     Cart
                     <img
@@ -113,23 +122,6 @@ export default function Drawer({ onClose, onRemove, items = [] }) {
                         </div>
                     </div>
                 ) : (
-                    // <div className='cartEmpty'>
-                    //     <img
-                    //         className='mb-20'
-                    //         width='120px'
-                    //         height='120px'
-                    //         src='/img/EmptyCart.svg'
-                    //         alt='Empty cart'
-                    //     />
-                    //     <h2>Cart is empty</h2>
-                    //     <p className='opacity-6'>
-                    //         Add at least one pair of sneakers to place an order.
-                    //     </p>
-                    //     <button onClick={onClose} className='greenButton'>
-                    //         <img src='/img/Arrow.svg' alt='Arrow' />
-                    //         Come back
-                    //     </button>
-                    // </div>
                     <Info
                         title={
                             isOrderComplete
