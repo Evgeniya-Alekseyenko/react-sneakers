@@ -1,53 +1,46 @@
-import React, { useState, useContext } from 'react';
-// import axios from 'axios';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 import Info from '../info';
 import { useCart } from '../../hooks/useCart';
-import AppContext from '../../context';
 
 import styles from './Drawer.module.scss';
 
-// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Drawer({ onClose, onRemove, items = [], opened }) {
-    // const { cartItems, setCartItems, totalPrice } = useCart();
-    const { totalPrice } = useCart();
+    const { cartItems, setCartItems, totalPrice } = useCart();
+    const [orderId, setOrderId] = useState(null);
+    const [isOrderComplete, setIsOrderComplete] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // const [orderId, setOrderId] = useState(null);
-    // const [isOrderComplete, setIsOrderComplete] = useState(false);
-    const [isLoading] = useState(false);
+    const onClickOrder = async () => {
+        try {
+            setIsLoading(true);
+            const { data } = await axios.post(
+                'https://630e37de3792563418798019.mockapi.io/orders',
+                {
+                    items: cartItems,
+                }
+            );
+            setOrderId(data.id);
+            setIsOrderComplete(true);
+            setCartItems([]);
 
-    const { orderId, onClickOrder, isOrderComplete } = useContext(AppContext);
-
-    // const onClickOrder = async () => {
-    //     try {
-    //         setIsLoading(true);
-    //         const { data } = await axios.post(
-    //             'https://630e37de3792563418798019.mockapi.io/orders',
-    //             {
-    //                 items: cartItems,
-    //             }
-    //         );
-    //         setOrderId(data.id);
-    //         setIsOrderComplete(true);
-    //         setCartItems([]);
-
-    //         for (let i = 0; i < cartItems.length; i++) {
-    //             const item = cartItems[i];
-    //             await axios.delete(
-    //                 'https://630e37de3792563418798019.mockapi.io/cart/' +
-    //                     item.id
-    //             );
-    //             await delay(1000);
-    //         }
-    //     } catch (error) {
-    //         alert('Error creating order');
-    //     }
-    //     setIsLoading(false);
-    // };
+            for (let i = 0; i < cartItems.length; i++) {
+                const item = cartItems[i];
+                await axios.delete(
+                    'https://630e37de3792563418798019.mockapi.io/cart/' +
+                        item.id
+                );
+                await delay(1000);
+            }
+        } catch (error) {
+            alert('Error creating order');
+        }
+        setIsLoading(false);
+    };
     return (
-        // <div className='overlay'>
-        //     <div className='drawer'>
         <div
             className={`${styles.overlay} ${
                 opened ? styles.overlayVisible : ''
@@ -64,10 +57,10 @@ export default function Drawer({ onClose, onRemove, items = [], opened }) {
                     />
                 </h2>
                 {items.length > 0 ? (
-                    <div className='drawer-cart'>
+                    <div className={styles.drawerCart}>
                         <div className='cart-item-box'>
                             {items.map((obj) => (
-                                <div key={obj.id} className='cart-item'>
+                                <div key={obj.id} className={styles.cartItem}>
                                     <img
                                         width={70}
                                         height={70}
@@ -106,7 +99,7 @@ export default function Drawer({ onClose, onRemove, items = [], opened }) {
                                     <div></div>
                                     <b>
                                         {totalPrice -
-                                            Math.round(totalPrice * 0.05)}{' '}
+                                            Math.round(totalPrice * 0.05)}
                                         $
                                     </b>
                                 </li>
@@ -117,7 +110,7 @@ export default function Drawer({ onClose, onRemove, items = [], opened }) {
                                 className='cart-item-btn greenButton'
                             >
                                 Checkout
-                                <img src='img/Arrow.svg' alt='Arrow' />{' '}
+                                <img src='img/Arrow.svg' alt='Arrow' />
                             </button>
                         </div>
                     </div>

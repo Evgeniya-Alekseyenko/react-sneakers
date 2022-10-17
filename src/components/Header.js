@@ -5,8 +5,6 @@ import { useCart } from '../hooks/useCart';
 
 export default function Header(props) {
     const { totalPrice } = useCart();
-    console.log({ totalPrice });
-
     return (
         <header>
             <div className='headerLeft'>

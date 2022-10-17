@@ -9,8 +9,6 @@ import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import Orders from './pages/Orders';
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 function App() {
     const [items, setItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
@@ -18,9 +16,6 @@ function App() {
     const [searchValue, setSearchValue] = useState('');
     const [cartOpened, setCartOpened] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-
-    const [orderId, setOrderId] = useState(null);
-    const [isOrderComplete, setIsOrderComplete] = useState(false);
 
     useEffect(() => {
         // axios
@@ -97,8 +92,6 @@ function App() {
         }
     };
     const onRemoveItem = (id) => {
-        // axios.delete(`https://630e37de3792563418798019.mockapi.io/cart/${id}`);
-        // setCartItems((prev) => prev.filter((item) => item.id !== id));
         try {
             axios.delete(
                 `https://630e37de3792563418798019.mockapi.io/cart/${id}`
@@ -140,35 +133,7 @@ function App() {
     };
 
     const isItemAdded = (id) => {
-        // return cartItems.some((obj) => Number(obj.id) === Number(id));
         return cartItems.some((obj) => Number(obj.parentId) === Number(id));
-    };
-
-    const onClickOrder = async () => {
-        try {
-            setIsLoading(true);
-            const { data } = await axios.post(
-                'https://630e37de3792563418798019.mockapi.io/orders',
-                {
-                    items: cartItems,
-                }
-            );
-            setOrderId(data.id);
-            setIsOrderComplete(true);
-            setCartItems([]);
-
-            for (let i = 0; i < cartItems.length; i++) {
-                const item = cartItems[i];
-                await axios.delete(
-                    'https://630e37de3792563418798019.mockapi.io/cart/' +
-                        item.id
-                );
-                await delay(1000);
-            }
-        } catch (error) {
-            alert('Error creating order');
-        }
-        setIsLoading(false);
     };
 
     return (
@@ -182,13 +147,12 @@ function App() {
                 onAddToCart,
                 setCartOpened,
                 setCartItems,
-                orderId,
-                onClickOrder,
-                isOrderComplete,
             }}
         >
             <div className='wrapper'>
-                {/* {cartOpened && (
+                {/* 
+                сокращенная запись тернарки! && возвращает первую false или последний операнд
+                {cartOpened && (
                     <Drawer
                         items={cartItems}
                         onClose={() => setCartOpened(false)}

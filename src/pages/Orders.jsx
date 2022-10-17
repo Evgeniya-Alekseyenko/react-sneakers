@@ -1,31 +1,29 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Card from '../components/Card/Card';
-import AppContext from '../context';
 
 export default function Orders() {
     const [orders, setOrders] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
-    const { orderId } = useContext(AppContext);
-    console.log(orderId);
+    const fetchOrders = async () => {
+        const response = axios.get(
+            'https://630e37de3792563418798019.mockapi.io/orders'
+        );
+        // await delay(2000);
+        if (!response) {
+            throw new Error('Data coud not be fetched!');
+        } else {
+            return (await response).data;
+        }
+    };
 
     useEffect(() => {
-        (async () => {
-            try {
-                const { data } = await axios.get(
-                    'https://630e37de3792563418798019.mockapi.io/orders'
-                );
-                setOrders(
-                    data.reduce((prev, obj) => [...prev, ...obj.items], [])
-                );
-                setIsLoading(false);
-            } catch (error) {
-                alert('Error when requesting orders');
-                console.error(error);
-            }
-        })();
+        fetchOrders()
+            .then((res) => {
+                setOrders(res);
+            })
+            .catch((e) => console.log(e.message));
     }, []);
 
     return (
@@ -34,14 +32,15 @@ export default function Orders() {
                 <h1>My orders</h1>
             </div>
             <div>
-                {(isLoading ? [...Array(8)] : orders).map((item, orderId) => (
-                    <div>
-                        Your order № {orderId}
-                        <Card
-                            key={orderId}
-                            loading={isLoading}
-                            {...item}
-                        />{' '}
+                {orders.map((order) => (
+                    <div key={order.id}>
+                        {console.log(order)}
+                        <div>Order # {order.id}</div>
+                        <div>
+                            {order.items.map((item) => (
+                                <Card key={item.id} {...item} />
+                            ))}
+                        </div>
                     </div>
                 ))}
             </div>
