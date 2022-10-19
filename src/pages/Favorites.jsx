@@ -11,15 +11,14 @@ export default function Favorites() {
             <div className='content-header'>
                 <h1>My bookmakers</h1>
             </div>
-            <div className='content-card-box'>
-                {' '}
+            <div>
                 <div className='content-card-box'>
                     {favorites.map((item, index) => (
                         <Card
                             key={index}
                             favorited={true}
                             onFavorite={onAddToFavorite}
-                            {...item} //передаем все свойства,что хранятся в карточке товара, чтоб не прописывать их отдельно
+                            {...item}
                         />
                     ))}
                 </div>

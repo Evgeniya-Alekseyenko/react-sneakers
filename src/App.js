@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
 
 import AppContext from './context';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import Drawer from './components/Drawer/Drawer';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
@@ -159,16 +159,13 @@ function App() {
                         onRemove={onRemoveItem}
                     />
                 )} */}
-
                 <Drawer
                     items={cartItems}
                     onClose={() => setCartOpened(false)}
                     onRemove={onRemoveItem}
                     opened={cartOpened}
                 />
-
                 <Header onClickCart={() => setCartOpened(true)} />
-
                 <Routes>
                     <Route
                         exact
@@ -202,4 +199,5 @@ function App() {
     );
 }
 // #7 01:07
+// bag in favorites
 export default App;

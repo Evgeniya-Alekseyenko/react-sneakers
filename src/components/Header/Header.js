@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useCart } from '../hooks/useCart';
+import { useCart } from '../../hooks/useCart';
+
+import styles from './Header.module.scss';
 
 export default function Header(props) {
     const { totalPrice } = useCart();
+
     return (
         <header>
-            <div className='headerLeft'>
+            <div className={styles.headerLeft}>
                 <Link to='/'>
                     <img
                         src='/img/logo.png'
@@ -15,14 +18,14 @@ export default function Header(props) {
                         height={40}
                         alt='Logo sneakers'
                     />
-                    <div className='headerInfo'>
+                    <div className={styles.headerInfo}>
                         <h3>React Sneakers</h3>
                         <p>Shop the best sneakers</p>
                     </div>
                 </Link>
             </div>
-            <ul className='headerRight'>
-                <li className='cart-box' onClick={props.onClickCart}>
+            <ul className={styles.headerRight}>
+                <li className={styles.cartIconBox} onClick={props.onClickCart}>
                     <img
                         src='/img/Cart.svg'
                         width={20}
@@ -41,14 +44,6 @@ export default function Header(props) {
                         />
                     </Link>
                 </li>
-                {/* <li>
-                    <img
-                        src='/img/User.svg'
-                        width={20}
-                        height={20}
-                        alt='User'
-                    />
-                </li> */}
                 <Link to='/orders'>
                     <img
                         width={18}

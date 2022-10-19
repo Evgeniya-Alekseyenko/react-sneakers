@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import ContentLoader from 'react-content-loader';
 
-import styles from './Card.module.scss';
 import AppContext from '../../context';
+
+import styles from './Card.module.scss';
 
 export default function Card({
     id,
@@ -12,22 +13,17 @@ export default function Card({
     onFavorite,
     onPlus,
     favorited = false,
-    // added = false,
     loading = false,
 }) {
     const { isItemAdded } = useContext(AppContext);
-    // const [isAdded, setIsAdded] = useState(added);
     const [isFavorite, setIsFavorite] = useState(favorited);
     const obj = { id, parentId: id, title, imageUrl, price };
 
     const onClickPlus = () => {
-        // onPlus({ id, imageUrl, title, price });
         onPlus(obj);
-        // setIsAdded(!isAdded);
     };
 
     const onClickFavorite = () => {
-        // onFavorite({ id, title, imageUrl, price });
         onFavorite(obj);
         setIsFavorite(!isFavorite);
     };
@@ -65,16 +61,7 @@ export default function Card({
                 </ContentLoader>
             ) : (
                 <>
-                    {/* <div className={styles.favorite} onClick={onClickFavorite}>
-                        <img
-                            src={
-                                isFavorite
-                                    ? '/img/Heart-liked.svg'
-                                    : '/img/Heart-unliked.svg'
-                            }
-                            alt='Unliked'
-                        />
-                    </div> */}
+                    {/*onFavorite && : если у нас нет onFavorite, то не отображаем его(напр. на странице заказов нам не нужно отображать сердечко в карточке)  */}
                     {onFavorite && (
                         <div
                             className={styles.favorite}
@@ -101,18 +88,8 @@ export default function Card({
                             <span>Price:</span>
                             <b>{price} $</b>
                         </div>
+                        {/* нигде не отображаем плюсик кроме главной страницы, нам не нужен он напр на странице ордеров */}
                         {onPlus && (
-                            // <img
-                            //     onClick={onClickPlus}
-                            //     src={
-                            //         // isAdded
-                            //         isItemAdded(id)
-                            //             ? '/img/Btn-checked.svg'
-                            //             : '/img/Btn-plus.svg'
-                            //     }
-                            //     alt='plus'
-                            // />
-
                             <img
                                 className={styles.plus}
                                 onClick={onClickPlus}

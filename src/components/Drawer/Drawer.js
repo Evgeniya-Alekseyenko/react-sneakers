@@ -51,14 +51,14 @@ export default function Drawer({ onClose, onRemove, items = [], opened }) {
                     Cart
                     <img
                         onClick={onClose}
-                        className='cart-item-btn___remove'
+                        className={styles.cartItemBtn_remove}
                         src='/img/Btn-removed.svg'
                         alt='Close'
                     />
                 </h2>
                 {items.length > 0 ? (
                     <div className={styles.drawerCart}>
-                        <div className='cart-item-box'>
+                        <div className={styles.cartItemBox}>
                             {items.map((obj) => (
                                 <div key={obj.id} className={styles.cartItem}>
                                     <img
@@ -67,34 +67,32 @@ export default function Drawer({ onClose, onRemove, items = [], opened }) {
                                         src={obj.imageUrl}
                                         alt='Sneakers'
                                     />
-                                    <div className='cart-item__text'>
-                                        <p className='card-box__title'>
-                                            {obj.title}{' '}
-                                        </p>
+                                    <div className={styles.cartItem_text}>
+                                        <p>{obj.title}</p>
                                         <b>{obj.price}</b>
                                     </div>
                                     <img
                                         onClick={() => onRemove(obj.id)}
-                                        className='cart-item-btn___remove'
+                                        className={styles.cartItemBtn_remove}
                                         src='/img/Btn-removed.svg'
                                         alt='Remove'
                                     />
                                 </div>
                             ))}
                         </div>
-                        <div className='cart-item-bottom'>
+                        <div className={styles.cartItem_bottom}>
                             <ul>
                                 <li>
                                     <span>Price:</span>
                                     <div></div>
                                     <b>{totalPrice} $</b>
                                 </li>
-                                <li className='cart-item-bottom__info'>
+                                <li>
                                     <span>Discount 5%:</span>
                                     <div></div>
                                     <b>{Math.round(totalPrice * 0.05)} $</b>
                                 </li>
-                                <li className='cart-item-bottom__info'>
+                                <li>
                                     <span>Total:</span>
                                     <div></div>
                                     <b>
@@ -107,7 +105,7 @@ export default function Drawer({ onClose, onRemove, items = [], opened }) {
                             <button
                                 disabled={isLoading}
                                 onClick={onClickOrder}
-                                className='cart-item-btn greenButton'
+                                className={styles.greenButton}
                             >
                                 Checkout
                                 <img src='img/Arrow.svg' alt='Arrow' />
