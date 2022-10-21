@@ -4,6 +4,9 @@
     align-items: center;
 }
 .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border: 1px solid #f3f3f3;
     padding: 20px;
     width: 150px;
@@ -25,7 +28,7 @@
 }
 .info {
     @include flexible();
-    .text {
+    .price {
         display: flex;
         flex-direction: column;
         span {
@@ -45,5 +48,5 @@
 .title {
     font-size: 14px;
     line-height: 17px;
-    height: 20%;
+    // height: 100%;
 }

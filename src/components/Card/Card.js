@@ -84,7 +84,7 @@ export default function Card({
                     />
                     <p className={styles.title}>{title}</p>
                     <div className={styles.info}>
-                        <div className={styles.text}>
+                        <div className={styles.price}>
                             <span>Price:</span>
                             <b>{price} $</b>
                         </div>

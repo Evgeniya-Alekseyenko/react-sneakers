@@ -9,7 +9,7 @@ export default function Favorites() {
     return (
         <div className='content'>
             <div className='content-header'>
-                <h1>My bookmakers</h1>
+                <h1>My bookmarks</h1>
             </div>
             <div>
                 <div className='content-card-box'>

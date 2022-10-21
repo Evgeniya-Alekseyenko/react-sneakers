@@ -51,9 +51,11 @@ header {
 .content {
     padding: 40px;
     margin-bottom: 40px;
+    margin: 0 auto;
 }
 .content-card-box {
     display: flex;
+    margin-left: 5%;
     flex-wrap: wrap;
 }
 .content-header {

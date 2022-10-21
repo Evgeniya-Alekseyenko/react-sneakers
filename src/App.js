@@ -35,22 +35,38 @@ function App() {
         //     });
         async function fetchData() {
             // setIsLoading(true);// если ф-я вып-ся больше, чем 1 раз, то ставить еще и тру
-            const cartResponse = await axios.get(
-                'https://630e37de3792563418798019.mockapi.io/cart'
-            );
-            const favoritesResponse = await axios.get(
-                'https://630e37de3792563418798019.mockapi.io/favorites'
-            );
-            const itemsResponse = await axios.get(
-                'https://630e37de3792563418798019.mockapi.io/items'
-            );
+            try {
+                const [cartResponse, favoritesResponse, itemsResponse] =
+                    await Promise.all([
+                        axios.get(
+                            'https://630e37de3792563418798019.mockapi.io/cart'
+                        ),
+                        axios.get(
+                            'https://630e37de3792563418798019.mockapi.io/favorites'
+                        ),
+                        axios.get(
+                            'https://630e37de3792563418798019.mockapi.io/items'
+                        ),
+                    ]);
+                // const cartResponse = await axios.get(
+                //     'https://630e37de3792563418798019.mockapi.io/cart'
+                // );
+                // const favoritesResponse = await axios.get(
+                //     'https://630e37de3792563418798019.mockapi.io/favorites'
+                // );
+                // const itemsResponse = await axios.get(
+                //     'https://630e37de3792563418798019.mockapi.io/items'
+                // );
 
-            setIsLoading(false);
-            setCartItems(cartResponse.data);
-            setFavorites(favoritesResponse.data);
-            setItems(itemsResponse.data);
+                setIsLoading(false);
+                setCartItems(cartResponse.data);
+                setFavorites(favoritesResponse.data);
+                setItems(itemsResponse.data);
+            } catch (error) {
+                alert('Error requesting data');
+                console.error(error);
+            }
         }
-
         fetchData();
     }, []);
 
@@ -74,6 +90,7 @@ function App() {
                     'https://630e37de3792563418798019.mockapi.io/cart',
                     obj
                 );
+                //чтобы не дожидаться ответа с бэка, и сразу в корзину добавлять товар:
                 setCartItems((prev) =>
                     prev.map((item) => {
                         if (item.parentId === data.parentId) {
@@ -125,6 +142,7 @@ function App() {
             }
         } catch (error) {
             alert('Failed to add to favorites');
+            console.error(error);
         }
     };
 
@@ -134,6 +152,7 @@ function App() {
 
     const isItemAdded = (id) => {
         return cartItems.some((obj) => Number(obj.parentId) === Number(id));
+        //пробегаемся по каждому объекту, вытаскиваем parentId, и сравниваем с тем id, котпередали в ф-ю
     };
 
     return (
@@ -198,6 +217,6 @@ function App() {
         </AppContext.Provider>
     );
 }
-// #7 01:07
+// #7 02:01
 // bag in favorites
 export default App;
