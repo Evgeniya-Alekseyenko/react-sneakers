@@ -15,7 +15,7 @@ export default function Card({
     favorited = false,
     loading = false,
 }) {
-    const { isItemAdded } = useContext(AppContext);
+    const { isItemAdded, isItemFavorited } = useContext(AppContext);
     const [isFavorite, setIsFavorite] = useState(favorited);
     const obj = { id, parentId: id, title, imageUrl, price };
 
@@ -69,11 +69,11 @@ export default function Card({
                         >
                             <img
                                 src={
-                                    isFavorite
+                                    isItemFavorited(id)
                                         ? '/img/Heart-liked.svg'
                                         : '/img/Heart-unliked.svg'
                                 }
-                                alt='Unliked'
+                                alt='heart'
                             />
                         </div>
                     )}

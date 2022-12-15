@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import axios from 'axios';
 
 import Card from '../components/Card/Card';
@@ -28,22 +30,41 @@ export default function Orders() {
 
     return (
         <div className='content'>
-            <div className='content-header'>
-                <h1>My orders</h1>
-            </div>
-            <div>
-                {orders.map((order) => (
-                    <div key={order.id}>
-                        {console.log(order)}
-                        <div>Order # {order.id}</div>
-                        <div>
-                            {order.items.map((item) => (
-                                <Card key={item.id} {...item} />
-                            ))}
-                        </div>
+            {orders.length > 0 ? (
+                <div>
+                    <div className='content-header'>
+                        <h1>My orders</h1>
                     </div>
-                ))}
-            </div>
+                    <div>
+                        {orders.map((order) => (
+                            <div key={order.id}>
+                                {console.log(order)}
+                                <div className='order-title'>
+                                    Order # {order.id}
+                                </div>
+                                <div>
+                                    {order.items.map((item) => (
+                                        <Card key={item.id} {...item} />
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <div className='emptyList'>
+                    {/* <div className='content-header'> */}
+                    <h1>No orders</h1>
+                    <p className='emptyList-title'>Please place an order</p>
+                    {/* </div> */}
+                    <button className='greenButton'>
+                        <Link to='/'>
+                            <span className='btn-title'>Return</span>
+                            <img src='/img/Arrow.svg' alt='Arrow' />
+                        </Link>
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

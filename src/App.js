@@ -91,6 +91,7 @@ function App() {
                     obj
                 );
                 //чтобы не дожидаться ответа с бэка, и сразу в корзину добавлять товар:
+                //если parentId из массива = тому parentId, что пришел с бэка, замени этот item, возьми все его старые данные ..., возьми его id и замени на тот, что пришел с бэка, иначе return item;
                 setCartItems((prev) =>
                     prev.map((item) => {
                         if (item.parentId === data.parentId) {
@@ -152,7 +153,11 @@ function App() {
 
     const isItemAdded = (id) => {
         return cartItems.some((obj) => Number(obj.parentId) === Number(id));
-        //пробегаемся по каждому объекту, вытаскиваем parentId, и сравниваем с тем id, котпередали в ф-ю
+        //пробегаемся по каждому объекту, вытаскиваем parentId, и сравниваем с тем id, кот передали в ф-ю
+    };
+
+    const isItemFavorited = (id) => {
+        return favorites.some((obj) => Number(obj.parentId) === Number(id));
     };
 
     return (
@@ -162,6 +167,7 @@ function App() {
                 cartItems,
                 favorites,
                 isItemAdded,
+                isItemFavorited,
                 onAddToFavorite,
                 onAddToCart,
                 setCartOpened,
@@ -193,6 +199,7 @@ function App() {
                             <Home
                                 items={items}
                                 cartItems={cartItems}
+                                favorites={favorites}
                                 searchValue={searchValue}
                                 setSearchValue={setSearchValue}
                                 onChangeSearchInput={onChangeSearchInput}
@@ -206,7 +213,7 @@ function App() {
                 <Routes>
                     <Route
                         exact
-                        path='favorites'
+                        path='/favorites'
                         element={<Favorites />}
                     ></Route>
                 </Routes>

@@ -59,7 +59,6 @@ header {
     flex-wrap: wrap;
 }
 .content-header {
-    @include flexible();
     .search-block {
         @include flexible();
         border: 1px solid #f3f3f3;
@@ -83,7 +82,7 @@ header {
     }
 }
 .greenButton {
-    width: 100%;
+    width: 245px;
     height: 55px;
     font-family: 'Inter';
     font-weight: 600;
@@ -100,6 +99,11 @@ header {
     &:disabled {
         background-color: #bebebe !important;
         cursor: default;
+    }
+    &:hover {
+        img {
+            transform: rotate(360deg) translateX(3px);
+        }
     }
 
     &:hover {
@@ -119,6 +123,28 @@ header {
     100% {
         opacity: 1;
     }
+}
+.btn-title {
+    color: white;
+    margin-right: 10px;
+}
+.emptyList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.emptyList-title {
+    opacity: 0.6;
+}
+.content-header_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 30px;
+}
+.content-header_img {
+    display: flex;
+    justify-content: center;
 }
 .cartEmpty {
     display: flex;
@@ -150,4 +176,10 @@ header {
             transition: transform 0.15s ease-in-out;
         }
     }
+}
+.order-title {
+    color: green;
+    font-weight: bold;
+    font-size: 22px;
+    margin: 20px 0;
 }

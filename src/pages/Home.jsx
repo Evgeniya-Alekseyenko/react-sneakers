@@ -4,6 +4,7 @@ import Card from '../components/Card/Card';
 
 export default function Home({
     items,
+    favorites,
     searchValue,
     setSearchValue,
     onChangeSearchInput,
@@ -11,16 +12,20 @@ export default function Home({
     onAddtoCart,
     isLoading,
 }) {
+    console.log(favorites);
+
     const renderItems = () => {
         const filtredItems = items.filter((item) =>
             item.title.toLowerCase().includes(searchValue.toLowerCase())
         );
-
         return (isLoading ? [...Array(8)] : filtredItems).map((item, index) => (
             <Card
                 key={index}
                 onFavorite={(obj) => onAddToFavorite(obj)}
                 onPlus={(obj) => onAddtoCart(obj)}
+                // favorited={favorites.some(
+                //     (obj) => Number(obj.parentId) === Number(item.id)
+                // )}
                 // added={cartItems.some(
                 //     (obj) => Number(obj.id) === Number(item.id)
                 // )} //не обяз указывать true, react итак понимает, когда исп булевое значение
@@ -34,26 +39,32 @@ export default function Home({
         <div>
             <div className='content'>
                 <div className='content-header'>
-                    <h1>
-                        {searchValue
-                            ? `Search by: "${searchValue}" `
-                            : `All sneakers`}
-                    </h1>
-                    <div className='search-block'>
-                        <img src='/img/Search.svg' alt='Search icon' />
-                        {searchValue && (
-                            <img
-                                onClick={() => setSearchValue('')}
-                                className='clear'
-                                src='/img/Btn-removed.svg'
-                                alt='Clear'
+                    <div className='content-header_img'>
+                        <img src='/img/Stan.png' alt='' />
+                    </div>
+                    <div className='content-header_box'>
+                        <h1>
+                            {searchValue
+                                ? `Search by: "${searchValue}" `
+                                : `All sneakers`}
+                        </h1>
+
+                        <div className='search-block'>
+                            <img src='/img/Search.svg' alt='Search icon' />
+                            {searchValue && (
+                                <img
+                                    onClick={() => setSearchValue('')}
+                                    className='clear'
+                                    src='/img/Btn-removed.svg'
+                                    alt='Clear'
+                                />
+                            )}
+                            <input
+                                onChange={onChangeSearchInput}
+                                value={searchValue}
+                                placeholder='Search...'
                             />
-                        )}
-                        <input
-                            onChange={onChangeSearchInput}
-                            value={searchValue}
-                            placeholder='Search...'
-                        />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -20,7 +20,7 @@ export default function Header(props) {
                     />
                     <div className={styles.headerInfo}>
                         <h3>React Sneakers</h3>
-                        <p>Shop the best sneakers</p>
+                        <p>Shop of the best sneakers</p>
                     </div>
                 </Link>
             </div>
