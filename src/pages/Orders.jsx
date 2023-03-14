@@ -38,7 +38,6 @@ export default function Orders() {
                     <div>
                         {orders.map((order) => (
                             <div key={order.id}>
-                                {console.log(order)}
                                 <div className='order-title'>
                                     Order # {order.id}
                                 </div>
@@ -53,10 +52,8 @@ export default function Orders() {
                 </div>
             ) : (
                 <div className='emptyList'>
-                    {/* <div className='content-header'> */}
                     <h1>No orders</h1>
                     <p className='emptyList-title'>Please place an order</p>
-                    {/* </div> */}
                     <button className='greenButton'>
                         <Link to='/'>
                             <span className='btn-title'>Return</span>

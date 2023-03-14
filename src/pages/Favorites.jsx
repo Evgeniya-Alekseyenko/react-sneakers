@@ -1,11 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Card from '../components/Card/Card';
 import AppContext from '../context';
 
 export default function Favorites() {
-    const { favorites, onAddToFavorite } = useContext(AppContext);
+    const { onAddToFavorite } = useContext(AppContext);
+
+    const [favorites, setFavorites] = useState([]);
+
+    useEffect(() => {
+        const savedFavorites =
+            JSON.parse(localStorage.getItem('favorites')) || [];
+        setFavorites(savedFavorites);
+    }, []);
 
     return (
         <div className='content'>

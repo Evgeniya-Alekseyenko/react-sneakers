@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router';
 
 import AppContext from './context';
 import Header from './components/Header/Header';
@@ -18,21 +18,6 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // axios
-        //     .get('https://630e37de3792563418798019.mockapi.io/items')
-        //     .then((res) => {
-        //         setItems(res.data);
-        //     });
-        // axios
-        //     .get('https://630e37de3792563418798019.mockapi.io/cart')
-        //     .then((res) => {
-        //         setCartItems(res.data);
-        //     });
-        // axios
-        //     .get('https://630e37de3792563418798019.mockapi.io/favorites')
-        //     .then((res) => {
-        //         setFavorites(res.data);
-        //     });
         async function fetchData() {
             // setIsLoading(true);// если ф-я вып-ся больше, чем 1 раз, то ставить еще и тру
             try {
@@ -123,29 +108,18 @@ function App() {
         }
     };
 
-    const onAddToFavorite = async (obj) => {
-        try {
-            if (
-                favorites.find((favObj) => Number(favObj.id) === Number(obj.id))
-            ) {
-                axios.delete(
-                    `https://630e37de3792563418798019.mockapi.io/favorites/${obj.id}`
-                );
-                setFavorites((prev) =>
-                    prev.filter((item) => Number(item.id) !== Number(obj.id))
-                );
-            } else {
-                const { data } = await axios.post(
-                    'https://630e37de3792563418798019.mockapi.io/favorites',
-                    obj
-                );
-                setFavorites((prev) => [...prev, data]);
-            }
-        } catch (error) {
-            alert('Failed to add to favorites');
-            console.error(error);
+    function onAddToFavorite(item) {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+        let index = favorites.findIndex((f) => f.id === item.id);
+
+        if (index === -1) {
+            favorites.push(item);
+        } else {
+            favorites.splice(index, 1);
         }
-    };
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
 
     const onChangeSearchInput = (event) => {
         setSearchValue(event.target.value);
@@ -157,6 +131,7 @@ function App() {
     };
 
     const isItemFavorited = (id) => {
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
         return favorites.some((obj) => Number(obj.parentId) === Number(id));
     };
 
@@ -175,15 +150,6 @@ function App() {
             }}
         >
             <div className='wrapper'>
-                {/* 
-                сокращенная запись тернарки! && возвращает первую false или последний операнд
-                {cartOpened && (
-                    <Drawer
-                        items={cartItems}
-                        onClose={() => setCartOpened(false)}
-                        onRemove={onRemoveItem}
-                    />
-                )} */}
                 <Drawer
                     items={cartItems}
                     onClose={() => setCartOpened(false)}
@@ -194,7 +160,7 @@ function App() {
                 <Routes>
                     <Route
                         exact
-                        path=''
+                        path='/'
                         element={
                             <Home
                                 items={items}
@@ -209,21 +175,15 @@ function App() {
                             />
                         }
                     ></Route>
-                </Routes>
-                <Routes>
                     <Route
                         exact
-                        path='/favorites'
+                        path='favorites'
                         element={<Favorites />}
                     ></Route>
-                </Routes>
-                <Routes>
-                    <Route exact path='/orders' element={<Orders />}></Route>
+                    <Route exact path='orders' element={<Orders />}></Route>
                 </Routes>
             </div>
         </AppContext.Provider>
     );
 }
-// #7 02:01
-// bag in favorites
 export default App;
