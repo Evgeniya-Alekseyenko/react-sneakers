@@ -59,8 +59,8 @@ export default function Drawer({ onClose, onRemove, items = [], opened }) {
                 {items.length > 0 ? (
                     <div className={styles.drawerCart}>
                         <div className={styles.cartItemBox}>
-                            {items.map((obj) => (
-                                <div key={obj.id} className={styles.cartItem}>
+                            {items.map((obj, index) => (
+                                <div key={index} className={styles.cartItem}>
                                     <img
                                         width={70}
                                         height={70}
