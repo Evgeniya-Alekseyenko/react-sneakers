@@ -12,7 +12,6 @@ export default function Orders() {
         const response = axios.get(
             'https://630e37de3792563418798019.mockapi.io/orders'
         );
-        // await delay(2000);
         if (!response) {
             throw new Error('Data coud not be fetched!');
         } else {

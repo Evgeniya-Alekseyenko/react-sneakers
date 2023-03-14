@@ -4,7 +4,6 @@ import Card from '../components/Card/Card';
 
 export default function Home({
     items,
-    favorites,
     searchValue,
     setSearchValue,
     onChangeSearchInput,
@@ -21,12 +20,6 @@ export default function Home({
                 key={index}
                 onFavorite={(obj) => onAddToFavorite(obj)}
                 onPlus={(obj) => onAddtoCart(obj)}
-                // favorited={favorites.some(
-                //     (obj) => Number(obj.parentId) === Number(item.id)
-                // )}
-                // added={cartItems.some(
-                //     (obj) => Number(obj.id) === Number(item.id)
-                // )} //не обяз указывать true, react итак понимает, когда исп булевое значение
                 loading={isLoading}
                 {...item} //передаем все свойства,что хранятся в карточке товара, чтоб не прописывать их отдельно
             />

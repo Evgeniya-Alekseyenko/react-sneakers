@@ -6,7 +6,6 @@ import AppContext from '../context';
 
 export default function Favorites() {
     const { onAddToFavorite } = useContext(AppContext);
-
     const [favorites, setFavorites] = useState([]);
 
     useEffect(() => {
